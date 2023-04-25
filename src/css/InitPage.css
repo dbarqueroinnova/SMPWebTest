@@ -1,0 +1,18 @@
+.loginPage{
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: url("../assets/img/PantallaFondo1.png"); /* The image used */
+  background-color: #FFFFFF;
+  background-position: bottom; 
+  background-repeat: no-repeat; 
+  background-size: cover; 
+}
+.loginPage .loginButton{
+    position: relative;
+    top: calc(75% - 38px);
+    text-align: center;
+  }

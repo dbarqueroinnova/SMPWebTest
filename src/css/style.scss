@@ -1,0 +1,238 @@
+:root {
+    --azul-uniserse: #202945;
+    --naranja-uniserse: #ff5100;
+    --purpura-uniserse: #7d2c7d;
+    --verde-uniserse: #2e9737;
+}
+
+body {
+    background: #ffffff;
+    font-family: "nunito-medium", sans-serif;
+}
+.mv-40{
+    max-height: 40vh;
+    overflow-y:auto;
+}
+
+
+@mixin transition($property) {
+    transition: $property 0.2s ease-in-out
+}
+
+/*/////////////////////////////////////
+SideBar Menu
+/////////////////////////////////////*/
+.sidebar-menu {
+    background-color: var(--azul-uniserse);
+    color: white;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    @include transition(width);
+
+    &.expanded {
+        width: 260px;
+    }
+
+    &.collapsed {
+        width: 80px;
+    }
+
+    .menu-button {
+        display: flex;
+        justify-content: flex-end;
+        height: 64px;
+
+        .hamburger-icon {
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+            padding: 20px 32px;
+            font-size: 1.25rem;
+            color: #fff;
+        }
+    }
+}
+
+.sidebar-menu-card-view{    
+    font-size: 0.80rem;
+    padding: 0 12px;
+    .profile-info{
+        border-radius: 20%;
+        padding: 10px;
+        box-sizing: border-box;
+        max-width: 200px;
+        &.collapsed {
+            display: none;
+        }
+    }
+}
+
+.sidebar-menu-item-view {
+    display: flex;
+    align-items: center;
+    a {
+        color: white;
+        text-decoration: none;
+        display: block;
+        padding: 8px 28px;
+        width: 100%;
+        .item-content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            overflow: hidden;
+            width: 100%;
+            white-space: nowrap;
+            @include transition(width);
+            &.collapsed{
+                max-width: 1.25rem;
+            }
+            .icon {
+                display: flex;
+                font-size: 1.25rem;
+            }
+
+            .label {
+                font-weight: 500;
+                margin-left: 10px;
+                font-size: 1rem;
+
+            }
+        }
+
+        // &:hover {
+        //     background-color: var(--naranja-uniserse);
+        //     color: white;
+        // }
+
+        // &:hover {
+        //     &+.tooltip {
+        //         display: inline-block;
+        //         animation-duration: 0.4s;
+        //         animation-name: tooltip;
+        //     }
+        // }
+    }
+
+    .tooltip {
+        position: absolute;
+        background-color: var(--naranja-uniserse);
+        left: 80px;
+        padding: 10px;
+        text-transform: capitalize;
+        display: none;
+        font-size: 1rem;
+        border-radius: 5%;
+        // opacity: 0.5;
+    }
+}
+
+@keyframes tooltip {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/*/////////////////////////////////////
+Main Content
+/////////////////////////////////////*/
+
+.content-wrapper {
+    // width: 100%;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    max-height: 100vh;
+    @include transition(margin-left);
+
+    &.expanded {
+        margin-left: 260px;
+    }
+
+    &.collapsed {
+        margin-left: 80px;
+    }
+}
+
+.sidebar-menu-sub-item-view {
+    display: flex;
+    align-items: center;
+    a {
+        color: white;
+        text-decoration: none;
+        display: block;
+        padding: 8px 10px;
+        width: 100%;
+        .item-content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            overflow: hidden;
+            width: 100%;
+            white-space: nowrap;
+            @include transition(width);
+            &.collapsed{
+                display: none;
+                max-width: 1.25rem;
+            }
+            .icon {
+                display: flex;
+                font-size: 1.25rem;
+            }
+
+            .label {
+                font-weight: 500;
+                margin-left: 10px;
+                font-size: 1rem;
+
+            }
+        }
+
+        &:hover {
+            background-color: var(--naranja-uniserse);
+            color: white;
+        }
+
+        &:hover {
+            &+.tooltip {
+                display: inline-block;
+                animation-duration: 0.4s;
+                animation-name: tooltip;
+            }
+        }
+    }
+
+    .tooltip {
+        position: absolute;
+        background-color: var(--naranja-uniserse);
+        left: 100px;
+        padding: 10px;
+        // text-transform: capitalize;
+        display: none;
+        font-size: 1rem;
+    }
+}
+
+.formUsuarios{
+    border: 1px rgb(194, 194, 194) solid;
+    border-radius: 10px;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    margin-top: 5%;
+}
+/*/////////////////////////////////////
+MIU Overwrite
+/////////////////////////////////////*/
+
+.MuiTableContainer-root {
+    max-height: 76vh;
+    max-width: 87vw;
+}
