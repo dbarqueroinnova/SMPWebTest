@@ -1,0 +1,51 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy container app to Azure Web App - SMPWebTest
+
+on:
+  push:
+    branches:
+      - Develop
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Log in to registry
+      uses: docker/login-action@v1
+      with:
+        registry: https://mcr.microsoft.com/
+        username: ${{ secrets.AzureAppService_ContainerUsername_f6f6e36657524b97b0d6483f747c7b61 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_6475ce9695344facb72a0a597ee2de71 }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_f6f6e36657524b97b0d6483f747c7b61 }}/appsvc/staticsite:${{ github.sha }}
+        file: ./Dockerfile
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'SMPWebTest'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_726b58164d9f4c20ae30e95b14e1264c }}
+        images: 'mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_f6f6e36657524b97b0d6483f747c7b61 }}/appsvc/staticsite:${{ github.sha }}'
